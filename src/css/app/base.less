@@ -1,0 +1,115 @@
+body {
+  -webkit-font-smoothing: antialiased;
+  font-family: "Lantinghei SC", "Open Sans", Arial, "Hiragino Sans GB", "Microsoft YaHei", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
+  overflow: auto;
+}
+
+.app-wrapper {
+  position: absolute;
+  min-width: @app-min-width;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* app-head */
+.app-head {
+  height: @app-head-height;
+  border-bottom: 1px solid @gray-lighter;
+  .clearfix;
+}
+.app-head__logo {
+  float: left;
+  &:before {
+    content: "";
+    width: 110px;
+    height: 46px;
+    margin: 0 10px;
+    background-image: url(/img/logo.png);
+    background-size: 110px auto;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  h1 {
+    font-size: @font-size-base * 1.6;
+    color: @gray-light;
+    display: inline-block;
+    line-height: @app-head-height;
+    vertical-align: middle;
+    margin: 0;
+  }
+}
+.app-head__actions {
+  float: right;
+  margin: 0;
+  list-style: none;
+  height: @app-head-height;
+  &:before {
+    content: "";
+    display: inline-block;
+    height: @app-head-height;
+    vertical-align: middle;
+  }
+  > li {
+    margin: 0 10px 0 0;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+/* app-side-nav */
+.app-side-nav {
+  position: absolute;
+  width: @app-size-nav-width;
+  top: @app-head-height;
+  left: 0;
+  bottom: 0;
+  border-right: 1px solid @gray-lighter;
+  overflow-y: auto;
+}
+.app-side-nav__nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  > li {
+    border-bottom: 1px solid @gray-lighter;
+    > a {
+      background-color: lighten(@gray-lighter, 2%);
+      display: block;
+      height: 36px;
+      line-height: 36px;
+      padding: 0 10px;
+      text-decoration: none;
+    }
+    &.dropup .app-side-nav__subnav {
+      display: block;
+    }
+  }
+}
+.app-side-nav__subnav {
+  list-style: none;
+  margin: 10px 0 10px 20px;
+  padding: 0;
+  display: none;
+}
+
+/* app-content */
+.app-content {
+  position: absolute;
+  top: @app-head-height;
+  left: @app-size-nav-width;
+  right: 0;
+  bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+
+.leaflet-popup-content-wrapper {
+  border-radius: 2px;
+}
+
+.yom-data-grid-no-wrap-border .yom-data-grid {
+  border: none;
+}

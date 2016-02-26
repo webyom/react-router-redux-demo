@@ -1,0 +1,18 @@
+{
+  "development": {
+    "cdn": "http://127.0.0.1:3007",
+    "Services": "http://127.0.0.1:4080"
+  },
+  "demo": {
+    "cdn": "http://47.88.18.101/react-demo",
+    "Services": "http://47.88.18.101:4080"
+  },
+  "production": {
+    "cdn": "http://127.0.0.1:3007",
+    "Services": "http://newapi.ddicar.com:4080"
+  },
+  "staging": {
+    "cdn": "http://cdn.ddicar.com",
+    "Services": "http://stg-newapi.ddicar.com:4080"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "name": "react-router-redux-demo",
+  "version": "0.0.1",
+  "description": "react-router-redux-demo",
+  "homepage": "https://github.com/webyom/react-router-redux-demo",
+  "author": {
+    "name": "Gary Wang",
+    "email": "webyom@gmail.com",
+    "url": "http://webyom.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webyom/react-router-redux-demo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/webyom/react-router-redux-demo/issues"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "gulp",
+    "start": "gulp dev",
+    "test": "gulp test"
+  },
+  "dependencies": {
+    "async": "^1.5.1",
+    "autobind-decorator": "^1.3.3",
+    "babel-polyfill": "^6.5.0",
+    "bluebird": "^3.2.1",
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.5.0",
+    "immutable": "^3.7.6",
+    "jquery": "^2.1.4",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-router": "^2.0.0",
+    "yom-require": "^1.1.6"
+  },
+  "devDependencies": {
+    "babel-eslint": "^5.0.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "del": "^2.2.0",
+    "gulp": "^3.9.0",
+    "gulp-amd-bundler": "^0.1.48",
+    "gulp-babel": "^6.1.2",
+    "gulp-digest-versioning": "^0.1.8",
+    "gulp-eslint": "^1.1.1",
+    "gulp-html-optimizer": "^0.1.53",
+    "gulp-less": "^3.0.5",
+    "gulp-minifier": "^0.1.2",
+    "gulp-postcss": "^6.0.1",
+    "gulp-property-merge": "^0.1.0",
+    "gulp-protractor": "^2.1.0",
+    "gulp-useref": "^3.0.4",
+    "gulp-util": "^3.0.7",
+    "karma": "^0.13.19",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-coverage": "^0.5.3",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-mocha": "^0.2.2",
+    "karma-mocha-reporter": "^1.1.5",
+    "karma-phantomjs-launcher": "^0.2.3",
+    "karma-safari-launcher": "^0.1.1",
+    "karma-sinon": "^1.0.4",
+    "lazypipe": "^1.0.1",
+    "live-server": "^0.9.0",
+    "mocha": "^2.3.4",
+    "phantomjs": "^1.9.19",
+    "postcss-cssnext": "^2.4.0",
+    "postcss-import": "^7.1.3",
+    "run-sequence": "^1.1.5",
+    "sinon": "^1.17.2",
+    "through2": "^2.0.0",
+    "wrench": "^1.5.8"
+  }
+}

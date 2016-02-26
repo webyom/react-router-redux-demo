@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>react-redux-hybird-app-demo</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico" />
+<!-- build:css css/app/main.css -->
+<link rel="stylesheet" href="css/vendor/font-awesome/css/font-awesome.css" />
+<link rel="stylesheet" href="css/app/main.css" />
+<!-- endbuild -->
+</head>
+<body>
+<div class="app-wrapper">
+  <i class="fa fa-refresh fa-spin fa-3x" style="position: fixed; top: 35%; left: 50%; font-size: 40px; margin-left: -20px;"></i>
+</div>
+
+<script>
+var G = {
+  MD5_MAP_SROUCE: '%{{md5map}}%',
+  MD5_MAP: {}
+};
+if (G.MD5_MAP_SROUCE[0] != '%') {
+  G.MD5_MAP = JSON.parse(G.MD5_MAP_SROUCE);
+}
+</script>
+
+<!-- build:js js/vendor/others.js -->
+<script src="js/vendor/babel-polyfill/polyfill.js"></script>
+<script src="js/vendor/immutable/immutable.js"></script>
+<script src="js/vendor/bluebird/bluebird.js"></script>
+<script src="js/vendor/jquery/jquery.js"></script>
+<script src="js/vendor/bootstrap/bootstrap.js"></script>
+<!-- endbuild -->
+<!-- build:js js/vendor/react.js -->
+<script src="js/vendor/react/react.js"></script>
+<script src="js/vendor/react-dom/react-dom.js"></script>
+<script src="js/vendor/react-router/ReactRouter.js"></script>
+<!-- endbuild -->
+<!-- build:js js/vendor/yom-require/require.js id="require-config-script" -->
+<script src="js/config/require-config.js" id="require-config-script"></script>
+<script src="js/vendor/yom-require/require.js"></script>
+<!-- endbuild -->
+
+<!-- require "js/app/boot" out="yes" -->
+
+<script>
+require(['app/boot']);
+</script>
+</body>
+</html>
