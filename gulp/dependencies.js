@@ -30,14 +30,15 @@ gulp.task('copy-js-dependencies', function (done) {
     'node_modules/babel-polyfill/dist/polyfill.js',
     'node_modules/yom-require/src/require.js',
     'node_modules/immutable/dist/immutable.js',
-    'node_modules/react/dist/react.js',
+    'node_modules/react/dist/react-with-addons.js',
     'node_modules/react-dom/dist/react-dom.js',
     'node_modules/react-router/umd/ReactRouter.js',
     'bower_components/reflux/dist/reflux.js',
     'bower_components/core-decorators.js/core-decorators.js',
     'node_modules/bluebird/js/browser/bluebird.js',
     'node_modules/bootstrap/dist/js/bootstrap.js',
-    'node_modules/jquery/dist/jquery.js'
+    'node_modules/jquery/dist/jquery.js',
+    'node_modules/classnames/index.js'
   ], function (item, done) {
     var src = item, dest = '';
     if (Array.isArray(item)) {

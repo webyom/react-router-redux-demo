@@ -64,10 +64,6 @@ gulp.task('bundle-html', ['gen-md5map'], function () {
   return gulp.src([
       'dist/index.html'
   ])
-    .pipe(useref({
-      searchPath: 'dist',
-      base: 'dist'
-    }))
     .pipe(propertyMerge({
       properties: {
         md5map: md5map
@@ -76,6 +72,10 @@ gulp.task('bundle-html', ['gen-md5map'], function () {
     .pipe(htmlOptimizer({
       requireBaseDir: 'dist/js',
       isRelativeDependency: isRelativeDependency
+    }))
+    .pipe(useref({
+      searchPath: 'dist',
+      base: 'dist'
     }))
     .pipe(gulp.dest('dist'));
 });

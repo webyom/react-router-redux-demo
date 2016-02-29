@@ -105,6 +105,36 @@ body {
   overflow-y: auto;
 }
 
+.app-content.transition-forward-enter {
+  transform: translateX(100%);
+  transition: transform .3s ease-in;
+}
+.app-content.transition-forward-enter.transition-forward-enter-active {
+  transform: translateX(0);
+}
+.app-content.transition-forward-leave {
+  transform: translateX(0);
+  transition: transform .3s ease-in;
+}
+.app-content.transition-forward-leave.transition-forward-leave-active {
+  transform: translateX(-100%);
+}
+
+.app-content.transition-back-enter {
+  transform: translateX(-100%);
+  transition: transform .3s ease-in;
+}
+.app-content.transition-back-enter.transition-back-enter-active {
+  transform: translateX(0);
+}
+.app-content.transition-back-leave {
+  transform: translateX(0);
+  transition: transform .3s ease-in;
+}
+.app-content.transition-back-leave.transition-back-leave-active {
+  transform: translateX(100%);
+}
+
 
 .leaflet-popup-content-wrapper {
   border-radius: 2px;

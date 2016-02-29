@@ -17,7 +17,9 @@ window.require = window.require || {
     'react-router': 'vendor/react-router/ReactRouter',
     'reflux': 'vendor/reflux/reflux',
     'core-decorators': 'vendor/core-decorators.js/core-decorators',
+    'app-decorators': 'app/decorator/index',
     'jquery': 'vendor/jquery/jquery',
+    'classnames': 'vendor/classnames/index',
     'bluebird': 'vendor/bluebird/bluebird',
     'immutable': 'vendor/immutable/immutable'
   },
@@ -39,6 +41,9 @@ window.require = window.require || {
     },
     'jquery': {
       exports: 'jQuery'
+    },
+    'classnames': {
+      exports: 'classNames'
     },
     'bluebird': {
       exports: 'Promise'
