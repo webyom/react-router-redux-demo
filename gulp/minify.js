@@ -15,8 +15,17 @@ gulp.task('minify', function () {
       minifyJS: true,
       minifyCSS: true,
       getKeptComment: function (content, filePath) {
-        var m = content.match(/\/\*![\s\S]*?\*\//img);
-        return m && m.join('\n') + '\n' || '';
+        var res = [];
+        var m;
+        m = content.match(/\/\*[\s\S]*?\*\//img);
+        if (m) {
+          m.forEach(function (c) {
+            if (c.indexOf('/*!') === 0) {
+              res.push(c);
+            }
+          });
+        }
+        return res.length && res.join('\n') + '\n' || '';
       }
     }))
     .pipe(gulp.dest('dist'));

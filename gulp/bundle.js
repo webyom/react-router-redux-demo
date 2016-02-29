@@ -46,6 +46,10 @@ gulp.task('gen-md5map', ['bundle-amd'], function () {
       'dist/js/vendor/**/*.js'
   ]))
     .pipe(through.obj(function (file, enc, next) {
+      if (fs.statSync(file.path).isDirectory()) {
+        next();
+        return;
+      }
       var md5 = crypto.createHash('md5')
           .update(fs.readFileSync(file.path))
           .digest('hex');
