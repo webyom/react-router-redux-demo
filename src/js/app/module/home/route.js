@@ -1,4 +1,4 @@
 module.exports = {
   path: 'home',
-  component: require('./main').default
+  component: require('./home').default
 };

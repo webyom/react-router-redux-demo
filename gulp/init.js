@@ -3,6 +3,7 @@ var gulp = require('gulp'),
     babel = require('gulp-babel'),
     less = require('gulp-less'),
     eslint = require('gulp-eslint'),
+    mt2amd = require('gulp-mt2amd'),
     lazyTasks = require('./lazy-tasks');
 
 // run init tasks
@@ -56,6 +57,7 @@ gulp.task('less-component', function (done) {
     .pipe(lazyTasks.lazyPostcssTask()).on('error', function (err) {
       done(err);
     })
+    .pipe(mt2amd())
     .pipe(gulp.dest('dist/js/app'));
 });
 
@@ -74,6 +76,7 @@ gulp.task('css-component', function (done) {
     .pipe(lazyTasks.lazyPostcssTask()).on('error', function (err) {
       done(err);
     })
+    .pipe(mt2amd())
     .pipe(gulp.dest('dist/js/app'));
 });
 

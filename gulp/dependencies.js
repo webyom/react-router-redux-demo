@@ -8,14 +8,13 @@ gulp.task('dependencies', ['bundle-js-dependencies', 'copy-js-dependencies', 'cs
 
 gulp.task('bundle-js-dependencies', function (done) {
   async.each([
-    'node_modules/autobind-decorator/lib/index.js'
   ], function (item, done) {
     var src = item, dest = '';
     if (Array.isArray(item)) {
       src = item[0];
       dest = item[1];
     } else {
-      dest = item.match(/node_modules\/([^\/]+)/);
+      dest = item.match(/(?:node_modules|bower_components)\/([^\/]+)/);
       dest = dest && dest[1] || '';
     }
     gulp.src(src)
@@ -34,6 +33,8 @@ gulp.task('copy-js-dependencies', function (done) {
     'node_modules/react/dist/react.js',
     'node_modules/react-dom/dist/react-dom.js',
     'node_modules/react-router/umd/ReactRouter.js',
+    'bower_components/reflux/dist/reflux.js',
+    'bower_components/core-decorators.js/core-decorators.js',
     'node_modules/bluebird/js/browser/bluebird.js',
     'node_modules/bootstrap/dist/js/bootstrap.js',
     'node_modules/jquery/dist/jquery.js'
@@ -43,7 +44,7 @@ gulp.task('copy-js-dependencies', function (done) {
       src = item[0];
       dest = item[1];
     } else {
-      dest = item.match(/node_modules\/([^\/]+)/);
+      dest = item.match(/(?:node_modules|bower_components)\/([^\/]+)/);
       dest = dest && dest[1] || '';
     }
     gulp.src(src)
@@ -61,7 +62,7 @@ gulp.task('css-dependencies', function (done) {
       src = item[0];
       dest = item[1];
     } else {
-      dest = item.match(/node_modules\/([^\/]+)/);
+      dest = item.match(/(?:node_modules|bower_components)\/([^\/]+)/);
       dest = dest && dest[1] || '';
     }
     gulp.src(src)

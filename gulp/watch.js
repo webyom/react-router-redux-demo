@@ -3,9 +3,11 @@
 var path = require('path'),
     gulp = require('gulp'),
     gutil = require('gulp-util'),
+    gulpif = require('gulp-if'),
     babel = require('gulp-babel'),
     less = require('gulp-less'),
     eslint = require('gulp-eslint'),
+    mt2amd = require('gulp-mt2amd'),
     through = require('through2'),
     lazyTasks = require('./lazy-tasks');
 
@@ -47,6 +49,7 @@ gulp.task('watch', function () {
         .pipe(lazyTasks.lazyPostcssTask()).on('error', function (err) {
           gutil.log(gutil.colors.red(err.message));
         })
+        .pipe(gulpif(filePath.indexOf('/js/app/') > 0, mt2amd()))
         .pipe(gulp.dest('dist/' + part));
     } else {
       return gulp.start('css');
@@ -62,6 +65,7 @@ gulp.task('watch', function () {
         .pipe(lazyTasks.lazyPostcssTask()).on('error', function (err) {
           gutil.log(gutil.colors.red(err.message));
         })
+        .pipe(gulpif(filePath.indexOf('/js/app/') > 0, mt2amd()))
         .pipe(gulp.dest('dist/' + part));
     } else {
       return gulp.start('css');

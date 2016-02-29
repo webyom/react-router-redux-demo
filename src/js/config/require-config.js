@@ -15,7 +15,8 @@ window.require = window.require || {
     'react': 'vendor/react/react',
     'react-dom': 'vendor/react-dom/react-dom',
     'react-router': 'vendor/react-router/ReactRouter',
-    'autobind-decorator': 'vendor/autobind-decorator/index',
+    'reflux': 'vendor/reflux/reflux',
+    'core-decorators': 'vendor/core-decorators.js/core-decorators',
     'jquery': 'vendor/jquery/jquery',
     'bluebird': 'vendor/bluebird/bluebird',
     'immutable': 'vendor/immutable/immutable'
@@ -29,6 +30,12 @@ window.require = window.require || {
     },
     'react-router': {
       exports: 'ReactRouter'
+    },
+    'reflux': {
+      exports: 'Reflux'
+    },
+    'core-decorators': {
+      exports: 'CoreDecorators'
     },
     'jquery': {
       exports: 'jQuery'

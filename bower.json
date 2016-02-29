@@ -1,0 +1,17 @@
+{
+  "name": "react-router-redux-demo",
+  "description": "react-router-redux-demo",
+  "main": "",
+  "authors": [
+    "Gary Wang"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/webyom/react-router-redux-demo",
+  "moduleType": [
+    "amd"
+  ],
+  "dependencies": {
+    "reflux": "~0.3.0",
+    "core-decorators.js": "core-decorators#~0.11.0"
+  }
+}
