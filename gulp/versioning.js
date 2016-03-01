@@ -8,7 +8,7 @@ var fixUrl = function (fileName, relPath, basePath) {
     var filePath = path.resolve(path.dirname(relPath), fileName);
     fileName = '/' + path.relative(basePath, filePath);
   }
-  return conf.cdn + fileName;
+  return conf.cdnOrigin + fileName;
 };
 
 // digest versioning template and css

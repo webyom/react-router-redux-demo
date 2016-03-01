@@ -1,6 +1,7 @@
 /* global process */
 
-var fs = require('fs'),
+var _ = require('lodash'),
+    fs = require('fs'),
     path = require('path'),
     crypto = require('crypto'),
     gulp = require('gulp'),
@@ -65,9 +66,9 @@ gulp.task('bundle-html', ['gen-md5map'], function () {
       'dist/**/*.html'
   ])
     .pipe(propertyMerge({
-      properties: {
+      properties: _.extend({}, {
         md5map: md5map
-      }
+      }, conf)
     }))
     .pipe(htmlOptimizer({
       requireBaseDir: 'dist/js',

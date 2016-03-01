@@ -2,6 +2,7 @@ import $ from 'jquery';
 import Promise from 'bluebird';
 
 const PROXY_PATH = '/ajax-proxy.html';
+const ORIGIN = location.origin || `${location.protocol}//${location.host}`;
 
 let proxyQueue = [];
 let proxyFrame = null;
@@ -96,7 +97,7 @@ function proxy(opt) {
  */
 ajax.getDataTypeUrl = function (url, dataType) {
   if (!(/^https?:/).test(url)) {
-    url = G.CGI_ORIGIN + G.CGI_BASE + url;
+    url = `${G.API_ORIGIN}/${url.replace(/^\/+/, '')}`;
   }
   return url.replace(/[^\/]+$/, function (m) {
     return m.replace(/^[\w\-\.]+/, function (m) {
@@ -139,24 +140,18 @@ ajax.dealCommonCode = function (code) {
  * @param {Object} opt
  */
 ajax.get = function (opt) {
-  let jqXHR, success;
+  let pro;
   opt = opt || {};
   opt.type = opt._method = 'GET';
   opt.headers = opt.headers || {};
   opt.headers['X-Requested-With'] = 'XMLHttpRequest';
-  success = opt.success;
-  opt.success = function (res, textStatus, jqXHR) {
-    if (!ajax.dealCommonCode(res.code) && success) {
-      success(res, textStatus, jqXHR);
-    }
-  };
+  opt.success = (res) => ajax.dealCommonCode(res.code);
   opt.url = ajax.getDataTypeUrl(opt.url, 'json');
   opt.urlObj = url2obj(opt.url);
-  if (G.ORIGIN != opt.urlObj.origin && opt.dataType == 'json') {
-    proxy(opt);
-    return;
+  if (ORIGIN != opt.urlObj.origin && opt.dataType == 'json') {
+    return proxy(opt);
   } else {
-    opt.dataType = opt.dataType || (G.ORIGIN == opt.urlObj.origin ? 'json' : 'jsonp');
+    opt.dataType = opt.dataType || (ORIGIN == opt.urlObj.origin ? 'json' : 'jsonp');
     if (opt.dataType == 'jsonp') {
       opt.url = ajax.getDataTypeUrl(opt.url, 'jsonp');
       opt.urlObj = url2obj(opt.url);
@@ -170,11 +165,12 @@ ajax.get = function (opt) {
       opt.jsonp = opt.jsonp || 'callback';
     }
   }
-  jqXHR = $.ajax(opt);
+  pro = Promise.resolve($.ajax(opt));
   opt.loading === false || ajax.showLoading();
-  jqXHR.always(function () {
+  pro.finally(function () {
     opt.loading === false || ajax.hideLoading();
   });
+  return pro;
 };
 
 /**
@@ -182,15 +178,14 @@ ajax.get = function (opt) {
  * @param {Object} opt
  */
 ajax.post = function (opt) {
-  let pro, success, data;
+  let pro, data;
   opt = opt || {};
   opt.type = opt._method = opt._method || 'POST';
   opt.dataType = 'json';
   opt.url = ajax.getDataTypeUrl(opt.url, opt.dataType);
   opt.urlObj = url2obj(opt.url);
-  if (G.ORIGIN != opt.urlObj.origin) {
-    proxy(opt);
-    return;
+  if (ORIGIN != opt.urlObj.origin) {
+    return proxy(opt);
   }
   data = opt.data || {};
   opt.charset = opt.charset || 'UTF-8';
@@ -200,13 +195,8 @@ ajax.post = function (opt) {
     opt.contentType = 'application/json; charset=' + opt.charset;
     opt.data = typeof data == 'string' ? data : JSON.stringify(data);
   }
-  success = opt.success;
-  opt.success = function (res, textStatus) {
-    if (!ajax.dealCommonCode(res.code) && success) {
-      success(res, textStatus);
-    }
-  };
-  pro = Promise($.ajax(opt));
+  opt.success = (res) => ajax.dealCommonCode(res.code);
+  pro = Promise.resolve($.ajax(opt));
   opt.loading === false || ajax.showLoading();
   pro.finally(function () {
     opt.loading === false || ajax.hideLoading();
