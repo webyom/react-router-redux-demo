@@ -6,7 +6,7 @@ var gulp = require('gulp'),
 gulp.task('minify', function () {
   return gulp.src([
       'dist/**/*.+(js|css)',
-      'dist/*.html'
+      'dist/**/*.html'
   ])
     .pipe(minify({
       minify: conf.env == 'production',

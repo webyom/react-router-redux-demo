@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>ajax-proxy</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+</head>
+<body>
+<script>
+var G = {
+  MD5_MAP_SROUCE: '%{{md5map}}%',
+  MD5_MAP: {}
+};
+if (G.MD5_MAP_SROUCE[0] != '%') {
+  G.MD5_MAP = JSON.parse(G.MD5_MAP_SROUCE);
+}
+</script>
+
+<!-- build:js /js/vendor/other-ajax-proxy.js -->
+<script src="/js/vendor/babel-polyfill/polyfill.js"></script>
+<script src="/js/vendor/core-decorators.js/core-decorators.js"></script>
+<script src="/js/vendor/bluebird/bluebird.js"></script>
+<script src="/js/vendor/jquery/jquery.js"></script>
+<!-- endbuild -->
+<!-- build:js /js/vendor/yom-require/require.js id="require-config-script" -->
+<script src="/js/config/require-config.js" id="require-config-script"></script>
+<script src="/js/vendor/yom-require/require.js"></script>
+<!-- endbuild -->
+
+<!-- require "./js/app/util/index" out="yes" -->
+
+<script>
+frameElement._loaded = 1;
+</script>
+</body>
+</html>

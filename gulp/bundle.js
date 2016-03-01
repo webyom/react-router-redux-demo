@@ -62,7 +62,7 @@ gulp.task('gen-md5map', ['bundle-amd'], function () {
 // bundle html
 gulp.task('bundle-html', ['gen-md5map'], function () {
   return gulp.src([
-      'dist/index.html'
+      'dist/**/*.html'
   ])
     .pipe(propertyMerge({
       properties: {
@@ -76,6 +76,11 @@ gulp.task('bundle-html', ['gen-md5map'], function () {
     .pipe(useref({
       searchPath: 'dist',
       base: 'dist'
+    }))
+    .pipe(through.obj(function (file, enc, next) {
+      file.base = file.base.split(/\/dist(\/|$)/)[0] + '/dist';
+      this.push(file);
+      next();
     }))
     .pipe(gulp.dest('dist'));
 });

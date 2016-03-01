@@ -14,8 +14,7 @@ var fixUrl = function (fileName, relPath, basePath) {
 // digest versioning template and css
 gulp.task('versioning-asset', function () {
   return gulp.src([
-    'dist/**/*.css',
-    'dist/js/**/*.html'
+    'dist/**/*.css'
   ])
     .pipe(digestVersioning({
       digestLength: conf.VERSION_DIGEST_LEN,
@@ -28,7 +27,7 @@ gulp.task('versioning-asset', function () {
 // digest versioning html page
 gulp.task('versioning-page', function () {
   return gulp.src([
-    'dist/index.html'
+    'dist/**/*.html'
   ])
     .pipe(digestVersioning({
       digestLength: conf.VERSION_DIGEST_LEN,
