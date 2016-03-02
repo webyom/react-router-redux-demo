@@ -73,5 +73,11 @@ window.require = window.require || {
     } else {
       return url;
     }
+  },
+  onLoadStart() {
+    require(['app-util'], util => util.ui.showLoading());
+  },
+  onLoadEnd() {
+    require(['app-util'], util => util.ui.hideLoading());
   }
 };
