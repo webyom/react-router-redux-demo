@@ -15,7 +15,7 @@ var G = {
   MD5_MAP_SROUCE: '%{{md5map}}%',
   MD5_MAP: {}
 };
-if (G.DOMAIN && G.DOMAIN[0] != '%') {
+if (G.DOMAIN) {
   document.domain = G.DOMAIN;
 }
 if (!G.API_ORIGIN) {

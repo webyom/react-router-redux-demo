@@ -6,7 +6,7 @@ const PROXY_PATH = '/ajax-proxy.html';
 const ORIGIN = location.origin || `${location.protocol}//${location.host}`;
 
 let proxyQueue = [];
-let proxyFrame = null;
+let proxyFrameMap = {};
 
 let ajax = {};
 
@@ -30,34 +30,30 @@ function url2obj(str) {
   return uri;
 }
 
-/**
- * cross domain proxy
- * @param {Object} opt
- */
-function proxyCall(opt, resolve, reject) {
+function proxyCall(opt, resolve, reject, getXhr) {
   let xhr, pro;
-  if (opt.getXhr) {
+  let proxyFrame = proxyFrameMap[opt.urlObj.origin];
+  if (getXhr) {
     try {
       xhr = new proxyFrame.contentWindow.XMLHttpRequest();
     } catch (e) {
       xhr = new proxyFrame.contentWindow.ActiveXObject('MSXML2.XMLHTTP');
     }
-    opt.getXhr(xhr);
-  } if (opt.type == 'GET') {
+    resolve(xhr);
+    return;
+  }
+  if (opt.type == 'GET') {
     pro = proxyFrame.contentWindow.require('app-util').ajax.get(opt);
   } else {
     pro = proxyFrame.contentWindow.require('app-util').ajax.post(opt);
   }
   pro.then(res => resolve(res))
-     .catch(err => reject(err))
-     .finally(() => opt.loading === false || ui.hideLoading());
+    .catch(err => reject(err))
+    .finally(() => opt.loading === false || ui.hideLoading());
 }
 
-/**
- * cross domain proxy
- * @param {Object} opt
- */
-function proxy(opt) {
+function proxy(opt, getXhr) {
+  let proxyFrame = proxyFrameMap[opt.urlObj.origin];
   if (!proxyFrame) {
     proxyFrame = document.createElement('iframe');
     proxyFrame.style.display = 'none';
@@ -65,19 +61,19 @@ function proxy(opt) {
     $(proxyFrame).on('load', function onload(evt) {
       if (proxyFrame._loaded) {
         while (proxyQueue.length) {
-          let {opt, resolve, reject} = proxyQueue.shift();
-          proxyCall(opt, resolve, reject);
+          let {opt, resolve, reject, getXhr} = proxyQueue.shift();
+          proxyCall(opt, resolve, reject, getXhr);
         }
       } else {
         $(proxyFrame).off('load', onload).remove();
-        proxyFrame = null;
+        proxyFrame = proxyFrameMap[opt.urlObj.origin] = null;
         while (proxyQueue.length) {
           let {reject} = proxyQueue.shift();
-          reject();
+          reject(new Error(`Failed to load proxy ${opt.urlObj.origin + PROXY_PATH}!`));
         }
       }
     });
-    proxyFrame = document.body.appendChild(proxyFrame);
+    proxyFrame = proxyFrameMap[opt.urlObj.origin] = document.body.appendChild(proxyFrame);
   }
   let resolve, reject;
   let pro = new Promise((res, rej) => {
@@ -85,19 +81,13 @@ function proxy(opt) {
     reject = rej;
   });
   if (proxyFrame._loaded) {
-    proxyCall(opt, resolve, reject);
+    proxyCall(opt, resolve, reject, getXhr);
   } else {
-    proxyQueue.push({opt, resolve, reject});
+    proxyQueue.push({opt, resolve, reject, getXhr});
   }
   return pro;
 }
 
-/**
- * returns the full url according to backend service name
- * @private
- * @param {String} url
- * @returns {String} the normalized url
- */
 function normalizeUrl(url) {
   if (!(/^https?:/).test(url)) {
     if (G.API_CONTEXT) {
@@ -109,11 +99,6 @@ function normalizeUrl(url) {
   return url;
 }
 
-/**
- * take action to some common code
- * @param {Number} code
- * @returns {Boolean} whether common code has been dealt
- */
 ajax.dealCommonCode = function (code) {
   let res = true;
   if (code === 10 && !(/\/html\/login\-/).test(location.pathname)) {
@@ -124,17 +109,28 @@ ajax.dealCommonCode = function (code) {
   return res;
 };
 
-/**
- * ajax get wrapper for jquery ajax
- * @param {Object} opt
- */
+ajax.getProxyXhr = function (url) {
+  let xhr;
+  let urlObj = url2obj(url);
+  if (ORIGIN != urlObj.origin) {
+    return proxy({
+      url: url,
+      urlObj: urlObj
+    }, true);
+  }
+  try {
+    xhr = new window.XMLHttpRequest();
+  } catch (e) {
+    xhr = new window.ActiveXObject('MSXML2.XMLHTTP');
+  }
+  return Promise.resolve(xhr);
+};
+
 ajax.get = function (opt) {
   opt = opt || {};
   opt.type = opt._method = 'GET';
   opt.headers = opt.headers || {};
   opt.headers['X-Requested-With'] = 'XMLHttpRequest';
-  opt.success = (res) => ajax.dealCommonCode(res.code);
-  opt.error = opt.complete = () => 0;
   opt.url = normalizeUrl(opt.url);
   opt.urlObj = opt.urlObj || url2obj(opt.url);
   opt.dataType = 'json'; // only support json
@@ -155,16 +151,13 @@ ajax.get = function (opt) {
   }
   let pro = Promise.resolve($.ajax(opt));
   opt.loading === false || ui.showLoading();
-  pro.finally(function () {
-    opt.loading === false || ui.hideLoading();
-  });
+  pro.then(res => ajax.dealCommonCode(res.code))
+    .finally(function () {
+      opt.loading === false || ui.hideLoading();
+    });
   return pro;
 };
 
-/**
- * ajax post wrapper for jquery ajax
- * @param {Object} opt
- */
 ajax.post = function (opt) {
   opt = opt || {};
   opt.type = opt._method = opt._method || 'POST';
@@ -182,30 +175,21 @@ ajax.post = function (opt) {
     opt.contentType = 'application/json; charset=' + opt.charset;
     opt.data = typeof data == 'string' ? data : JSON.stringify(data);
   }
-  opt.success = (res) => ajax.dealCommonCode(res.code);
-  opt.error = opt.complete = () => 0;
   let pro = Promise.resolve($.ajax(opt));
   opt.loading === false || ui.showLoading();
-  pro.finally(function () {
-    opt.loading === false || ui.hideLoading();
-  });
+  pro.then(res => ajax.dealCommonCode(res.code))
+    .finally(function () {
+      opt.loading === false || ui.hideLoading();
+    });
   return pro;
 };
 
-/**
- * ajax put wrapper for jquery ajax
- * @param {Object} opt
- */
 ajax.put = function (opt) {
   opt = opt || {};
   opt._method = 'PUT';
   return ajax.post(opt);
 };
 
-/**
- * ajax delete wrapper for jquery ajax
- * @param {Object} opt
- */
 ajax.del = function (opt) {
   opt = opt || {};
   opt._method = 'DELETE';
