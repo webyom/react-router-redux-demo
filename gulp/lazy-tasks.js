@@ -1,12 +1,15 @@
 /* global Buffer, __dirname */
 
-var fs = require('fs'),
+var _ = require('lodash'),
+    fs = require('fs'),
     path = require('path'),
+    conf = require('./conf'),
     lazypipe = require('lazypipe'),
     postcss = require('gulp-postcss'),
     postcssImport = require('postcss-import'),
     postcssCssnext = require('postcss-cssnext'),
-    through = require('through2');
+    through = require('through2'),
+    propertyMerge = require('gulp-property-merge');
 
 var EOL = '\n';
 
@@ -35,3 +38,10 @@ exports.lazyPostcssTask = lazypipe()
       browsers: ['not ie <= 8']
     })
   ]);
+
+exports.lazyInitHtmlTask = lazypipe()
+  .pipe(propertyMerge, {
+    properties: _.extend({}, {
+      md5map: {}
+    }, conf)
+  });

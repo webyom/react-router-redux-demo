@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import Promise from 'bluebird';
+import ui from './ui';
 
 const PROXY_PATH = '/ajax-proxy.html';
 const ORIGIN = location.origin || `${location.protocol}//${location.host}`;
@@ -33,13 +34,8 @@ function url2obj(str) {
  * cross domain proxy
  * @param {Object} opt
  */
-function proxyCall(opt) {
-  let xhr;
-  let complete = opt.complete;
-  opt.complete = function () {
-    opt.loading === false || ajax.hideLoading();
-    complete && complete();
-  };
+function proxyCall(opt, resolve, reject) {
+  let xhr, pro;
   if (opt.getXhr) {
     try {
       xhr = new proxyFrame.contentWindow.XMLHttpRequest();
@@ -48,10 +44,13 @@ function proxyCall(opt) {
     }
     opt.getXhr(xhr);
   } if (opt.type == 'GET') {
-    return proxyFrame.contentWindow.require('app-util').ajax.get(opt);
+    pro = proxyFrame.contentWindow.require('app-util').ajax.get(opt);
   } else {
-    return proxyFrame.contentWindow.require('app-util').ajax.post(opt);
+    pro = proxyFrame.contentWindow.require('app-util').ajax.post(opt);
   }
+  pro.then(res => resolve(res))
+     .catch(err => reject(err))
+     .finally(() => opt.loading === false || ui.hideLoading());
 }
 
 /**
@@ -60,65 +59,55 @@ function proxyCall(opt) {
  */
 function proxy(opt) {
   if (!proxyFrame) {
-    opt.urlObj = opt.urlObj || url2obj(opt.url);
     proxyFrame = document.createElement('iframe');
     proxyFrame.style.display = 'none';
     proxyFrame.src = opt.urlObj.origin + PROXY_PATH;
     $(proxyFrame).on('load', function onload(evt) {
       if (proxyFrame._loaded) {
         while (proxyQueue.length) {
-          proxyCall(proxyQueue.shift());
+          let {opt, resolve, reject} = proxyQueue.shift();
+          proxyCall(opt, resolve, reject);
         }
       } else {
         $(proxyFrame).off('load', onload).remove();
         proxyFrame = null;
         while (proxyQueue.length) {
-          opt = proxyQueue.shift();
-          opt.error && opt.error();
-          opt.complete && opt.complete();
+          let {reject} = proxyQueue.shift();
+          reject();
         }
       }
     });
     proxyFrame = document.body.appendChild(proxyFrame);
   }
+  let resolve, reject;
+  let pro = new Promise((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
   if (proxyFrame._loaded) {
-    proxyCall(opt);
+    proxyCall(opt, resolve, reject);
   } else {
-    proxyQueue.push(opt);
+    proxyQueue.push({opt, resolve, reject});
   }
+  return pro;
 }
 
 /**
- * returns the full url according to backend service name and data type
+ * returns the full url according to backend service name
  * @private
  * @param {String} url
- * @param {String} dataType
- * @returns {String} the full url
+ * @returns {String} the normalized url
  */
-ajax.getDataTypeUrl = function (url, dataType) {
+function normalizeUrl(url) {
   if (!(/^https?:/).test(url)) {
-    url = `${G.API_ORIGIN}/${url.replace(/^\/+/, '')}`;
+    if (G.API_CONTEXT) {
+      url = `${G.API_ORIGIN}/${G.API_CONTEXT}/${url.replace(/^\/+/, '')}`;
+    } else {
+      url = `${G.API_ORIGIN}/${url.replace(/^\/+/, '')}`;
+    }
   }
-  return url.replace(/[^\/]+$/, function (m) {
-    return m.replace(/^[\w\-\.]+/, function (m) {
-      return m.split('.')[0] + '.' + dataType;
-    });
-  });
-};
-
-/**
- * show the loading icon
- */
-ajax.showLoading = function () {
-  $('#circleG').show();
-};
-
-/**
- * hide the loading icon
- */
-ajax.hideLoading = function () {
-  $('#circleG').hide();
-};
+  return url;
+}
 
 /**
  * take action to some common code
@@ -140,21 +129,20 @@ ajax.dealCommonCode = function (code) {
  * @param {Object} opt
  */
 ajax.get = function (opt) {
-  let pro;
   opt = opt || {};
   opt.type = opt._method = 'GET';
   opt.headers = opt.headers || {};
   opt.headers['X-Requested-With'] = 'XMLHttpRequest';
   opt.success = (res) => ajax.dealCommonCode(res.code);
-  opt.url = ajax.getDataTypeUrl(opt.url, 'json');
-  opt.urlObj = url2obj(opt.url);
+  opt.error = opt.complete = () => 0;
+  opt.url = normalizeUrl(opt.url);
+  opt.urlObj = opt.urlObj || url2obj(opt.url);
+  opt.dataType = 'json'; // only support json
   if (ORIGIN != opt.urlObj.origin && opt.dataType == 'json') {
     return proxy(opt);
   } else {
     opt.dataType = opt.dataType || (ORIGIN == opt.urlObj.origin ? 'json' : 'jsonp');
     if (opt.dataType == 'jsonp') {
-      opt.url = ajax.getDataTypeUrl(opt.url, 'jsonp');
-      opt.urlObj = url2obj(opt.url);
       opt.scriptCharset = opt.scriptCharset || opt.charset || 'UTF-8';
       if (!opt.jsonpCallback) {
         opt.url.split('/').pop().replace(/^[a-zA-Z_]\w*/, function (m) {
@@ -165,10 +153,10 @@ ajax.get = function (opt) {
       opt.jsonp = opt.jsonp || 'callback';
     }
   }
-  pro = Promise.resolve($.ajax(opt));
-  opt.loading === false || ajax.showLoading();
+  let pro = Promise.resolve($.ajax(opt));
+  opt.loading === false || ui.showLoading();
   pro.finally(function () {
-    opt.loading === false || ajax.hideLoading();
+    opt.loading === false || ui.hideLoading();
   });
   return pro;
 };
@@ -178,16 +166,15 @@ ajax.get = function (opt) {
  * @param {Object} opt
  */
 ajax.post = function (opt) {
-  let pro, data;
   opt = opt || {};
   opt.type = opt._method = opt._method || 'POST';
   opt.dataType = 'json';
-  opt.url = ajax.getDataTypeUrl(opt.url, opt.dataType);
-  opt.urlObj = url2obj(opt.url);
+  opt.url = normalizeUrl(opt.url);
+  opt.urlObj = opt.urlObj || url2obj(opt.url);
   if (ORIGIN != opt.urlObj.origin) {
     return proxy(opt);
   }
-  data = opt.data || {};
+  let data = opt.data || {};
   opt.charset = opt.charset || 'UTF-8';
   opt.headers = opt.headers || {};
   opt.headers['X-Requested-With'] = 'XMLHttpRequest';
@@ -196,10 +183,11 @@ ajax.post = function (opt) {
     opt.data = typeof data == 'string' ? data : JSON.stringify(data);
   }
   opt.success = (res) => ajax.dealCommonCode(res.code);
-  pro = Promise.resolve($.ajax(opt));
-  opt.loading === false || ajax.showLoading();
+  opt.error = opt.complete = () => 0;
+  let pro = Promise.resolve($.ajax(opt));
+  opt.loading === false || ui.showLoading();
   pro.finally(function () {
-    opt.loading === false || ajax.hideLoading();
+    opt.loading === false || ui.hideLoading();
   });
   return pro;
 };

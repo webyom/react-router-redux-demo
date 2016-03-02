@@ -11,18 +11,17 @@
 var G = {
   DOMAIN: '%{{domain}}%',
   API_ORIGIN: '%{{apiOrigin}}%',
+  API_CONTEXT: '%{{apiContext}}%',
   MD5_MAP_SROUCE: '%{{md5map}}%',
   MD5_MAP: {}
 };
-if (G.DOMAIN && G.DOMAIN != document.domain && G.DOMAIN[0] != '%') {
+if (G.DOMAIN && G.DOMAIN[0] != '%') {
   document.domain = G.DOMAIN;
 }
-if (G.API_ORIGIN[0] == '%') {
+if (!G.API_ORIGIN) {
   G.API_ORIGIN = location.origin;
 }
-if (G.MD5_MAP_SROUCE[0] != '%') {
-  G.MD5_MAP = JSON.parse(G.MD5_MAP_SROUCE);
-}
+G.MD5_MAP = JSON.parse(G.MD5_MAP_SROUCE);
 </script>
 
 <!-- build:js /js/vendor/other-ajax-proxy.js -->

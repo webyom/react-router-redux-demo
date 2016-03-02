@@ -17,6 +17,15 @@ gulp.task('watch', function () {
     console.log(err.stack || err.message || err);
   });
 
+  gulp.watch('src/**/*.html', function (evt) {
+    var filePath = evt.path;
+    var part = (path.dirname(filePath) + '/').split('/src/').pop();
+    gutil.log(gutil.colors.cyan('[changed]'), filePath);
+    return gulp.src(filePath)
+      .pipe(lazyTasks.lazyInitHtmlTask())
+      .pipe(gulp.dest('dist/' + part));
+  });
+
   gulp.watch('src/js/**/*.+(js|jsx)', function (evt) {
     var filePath = evt.path;
     var part = (path.dirname(filePath) + '/').split('/src/js/').pop();

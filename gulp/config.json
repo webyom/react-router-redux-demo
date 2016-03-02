@@ -1,22 +1,26 @@
 {
   "development": {
     "domain": "",
-    "cdnOrigin": "http://127.0.0.1:3007",
-    "apiOrigin": "http://127.0.0.1:4080"
+    "cdnOrigin": "",
+    "apiOrigin": "",
+    "apiContext": ""
   },
   "demo": {
     "domain": "",
     "cdnOrigin": "http://47.88.18.101/react-demo",
-    "apiOrigin": "http://47.88.18.101:4080"
+    "apiOrigin": "http://47.88.18.101:4080",
+    "apiContext": ""
   },
   "production": {
-    "domain": "",
-    "cdnOrigin": "http://127.0.0.1:3007",
-    "apiOrigin": "http://newapi.ddicar.com:4080"
+    "domain": "ddicar.com",
+    "cdnOrigin": "http://cdn.ddicar.com",
+    "apiOrigin": "http://newapi.ddicar.com:4080",
+    "apiContext": ""
   },
   "staging": {
-    "domain": "",
+    "domain": "ddicar.com",
     "cdnOrigin": "http://cdn.ddicar.com",
-    "apiOrigin": "http://stg-newapi.ddicar.com:4080"
+    "apiOrigin": "http://stg-newapi.ddicar.com:4080",
+    "apiContext": ""
   }
 }

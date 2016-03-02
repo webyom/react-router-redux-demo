@@ -30,6 +30,7 @@ gulp.task('eslint', function () {
 // move html
 gulp.task('html', function () {
   return gulp.src('src/**/*.html')
+    .pipe(lazyTasks.lazyInitHtmlTask())
     .pipe(gulp.dest('dist'));
 });
 
