@@ -8,7 +8,7 @@ import './style.css';
 class ModuleComponent extends React.Component {
   render() {
     return (
-      <div>Home</div>
+      <div>欢迎使用演示系统！</div>
     );
   }
 }

@@ -2,6 +2,8 @@ import React from 'react';
 import {Link} from 'react-router';
 import classNames from 'classnames';
 import {routeComponent} from 'app-decorators';
+import AppHead from './app-head';
+import AppSideNav from './app-side-nav';
 
 const CSSTransitionGroup = React.addons.CSSTransitionGroup;
 
@@ -18,10 +20,9 @@ class ModuleComponent extends React.Component {
         component="div"
         transitionName={back ? 'transition-back' : 'transition-forward'}
         transitionEnterTimeout={500}
-        transitionLeaveTimeout={500}
-        className={classNames(this.classNames)}>
-        <Link to={'/home'} activeClassName="active">Home</Link>
-        <Link to={'/setting'} activeClassName="active">Setting</Link>
+        transitionLeaveTimeout={500}>
+        <AppHead />
+        <AppSideNav />
         {React.cloneElement(this.props.children, {
           key: this.props.location.pathname,
           className: 'app-content'

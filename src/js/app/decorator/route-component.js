@@ -37,7 +37,7 @@ let routeComponent = Wrapped => class RouteComponent extends Wrapped {
   render() {
     let ele = super.render();
     let cns = this.classNames;
-    if (ele.props.className) {
+    if (ele.props && ele.props.className) {
       ele.props.className.split(/\s+/).forEach(c => c && (cns[c] = true));
     }
     return React.cloneElement(ele, {className: classNames(cns)});
