@@ -21,6 +21,7 @@ window.require = window.require || {
     'classnames': 'vendor/classnames/index',
     'bluebird': 'vendor/bluebird/bluebird',
     'immutable': 'vendor/immutable/immutable',
+    'yom-form-util': 'vendor/yom-form-util/yom-form-util',
     'app-decorators': 'app/decorator/index',
     'app-util': 'app/util/index'
   },

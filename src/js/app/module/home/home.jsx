@@ -5,7 +5,6 @@ import {routeComponent, formUtilComponent} from 'app-decorators';
 import './style.css';
 
 @routeComponent
-@formUtilComponent
 class ModuleComponent extends React.Component {
   render() {
     return (

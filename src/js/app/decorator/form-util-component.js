@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import Promise from 'bluebird';
 
 let formUtilComponent = Wrapped => class FormUtilComponent extends Wrapped {
   get classNames() {
@@ -11,7 +12,11 @@ let formUtilComponent = Wrapped => class FormUtilComponent extends Wrapped {
   }
 
   validateForm() {
-
+    return new Promise((resolve, reject) => {
+      require(['yom-form-util'], (YomForUtil) => {
+        resolve(YomForUtil);
+      }, (errCode, err, opt) => reject(err));
+    });
   }
 
   render() {

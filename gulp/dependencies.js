@@ -38,7 +38,8 @@ gulp.task('copy-js-dependencies', function (done) {
     'node_modules/bluebird/js/browser/bluebird.js',
     'node_modules/bootstrap/dist/js/bootstrap.js',
     'node_modules/jquery/dist/jquery.js',
-    'node_modules/classnames/index.js'
+    'node_modules/classnames/index.js',
+    'node_modules/yom-form-util/dist/yom-form-util.js'
   ], function (item, done) {
     var src = item, dest = '';
     if (Array.isArray(item)) {
