@@ -1,3 +1,6 @@
+import React from 'react';
+import classNames from 'classnames';
+
 let routeComponent = Wrapped => class RouteComponent extends Wrapped {
   get classNames() {
     let res = {};
@@ -28,7 +31,16 @@ let routeComponent = Wrapped => class RouteComponent extends Wrapped {
     if (this.props.className) {
       this.props.className.split(/\s+/).forEach(c => c && (res[c] = true));
     }
-    return res;
+    return {...super.classNames, ...res};
+  }
+
+  render() {
+    let ele = super.render();
+    let cns = this.classNames;
+    if (ele.props.className) {
+      ele.props.className.split(/\s+/).forEach(c => c && (cns[c] = true));
+    }
+    return React.cloneElement(ele, {className: classNames(cns)});
   }
 };
 

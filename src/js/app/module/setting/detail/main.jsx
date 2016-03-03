@@ -8,7 +8,7 @@ import './style.css';
 class ModuleComponent extends React.Component {
   render() {
     return (
-      <div className={classNames(this.classNames)}>
+      <div>
         <div>Detail</div>
       </div>
     );

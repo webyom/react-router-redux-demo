@@ -9,7 +9,7 @@ class ModuleComponent extends React.Component {
   render() {
     let children = this.props.children;
     return (
-      <div className={classNames(this.classNames)}>
+      <div>
         <div>Setting</div>
         <Link to={'/setting'} activeClassName="active">Setting</Link>
         <Link to={'/setting/detail/1'} activeClassName="active">Detail</Link>
