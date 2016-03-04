@@ -12,6 +12,7 @@ if (requireConfigScriptEl) {
 window.require = window.require || {
   baseUrl: G.REQUIRE_BASE_URL,
   paths: {
+    'widget': 'app/widget',
     'react': 'vendor/react/react',
     'react-dom': 'vendor/react-dom/react-dom',
     'react-router': 'vendor/react-router/ReactRouter',

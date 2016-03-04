@@ -130,6 +130,12 @@ body {
   position: relative;
   > input.form-control {
     width: 191px;
+    &[readonly] {
+      background-color: #fff;
+    }
+    &[disabled] {
+      background-color: @gray-lighter;
+    }
   }
   > .input-group-addon {
     width: auto;
@@ -138,8 +144,14 @@ body {
     left: 0 !important;
     top: 100% !important;
     width: 100% !important;
+    margin-bottom: 10px;
     .table-condensed {
       width: 100% !important;
+    }
+  }
+  &.disabled {
+    .datetimepicker {
+      display: none !important;
     }
   }
 }

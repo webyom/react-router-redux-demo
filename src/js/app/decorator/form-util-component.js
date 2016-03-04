@@ -17,6 +17,9 @@ let formUtilComponent = Wrapped => class FormUtilComponent extends Wrapped {
       require(['yom-form-util'], (YomFormUtil) => {
         let form = ReactDOM.findDOMNode(this.refs.form || this);
         let valid = YomFormUtil.validate(form);
+        if (this.getFormData) {
+          valid.data = this.getFormData();
+        }
         let subForms = [];
         for (let key in this.refs) {
           if (key.indexOf('formUtilComponent') === 0) {
