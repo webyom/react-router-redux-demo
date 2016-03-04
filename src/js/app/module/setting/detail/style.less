@@ -3,14 +3,14 @@
 .route__setting--detail-_id {
   &.transition-forward-enter {
     transform: translateX(100%);
-    transition: transform .3s ease-in;
+    transition: transform .3s ease-out;
   }
   &.transition-forward-enter.transition-forward-enter-active {
     transform: translateX(0);
   }
   &.transition-forward-leave {
     transform: translateX(0);
-    transition: transform .3s ease-in;
+    transition: transform .3s ease-out;
   }
   &.transition-forward-leave.transition-forward-leave-active {
     transform: translateX(-100%);
@@ -18,14 +18,14 @@
 
   &.transition-back-enter {
     transform: translateX(-100%);
-    transition: transform .3s ease-in;
+    transition: transform .3s ease-out;
   }
   &.transition-back-enter.transition-back-enter-active {
     transform: translateX(0);
   }
   &.transition-back-leave {
     transform: translateX(0);
-    transition: transform .3s ease-in;
+    transition: transform .3s ease-out;
   }
   &.transition-back-leave.transition-back-leave-active {
     transform: translateX(100%);

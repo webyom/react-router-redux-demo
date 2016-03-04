@@ -15,8 +15,14 @@ body {
 
 /* app-head */
 .app-head {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   height: @app-head-height;
   border-bottom: 1px solid @gray-lighter;
+  background-color: #fff;
+  z-index: 3;
   .clearfix;
 }
 .app-head__logo {
@@ -60,7 +66,7 @@ body {
 
 /* app-side-nav */
 .app-side-nav {
-  position: absolute;
+  position: fixed;
   width: @app-size-nav-width;
   top: @app-head-height;
   left: 0;
@@ -68,7 +74,7 @@ body {
   border-right: 1px solid @gray-lighter;
   background-color: #fff;
   overflow-y: auto;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* app-content */
@@ -77,10 +83,8 @@ body {
   top: @app-head-height;
   left: @app-size-nav-width;
   right: 0;
-  bottom: 0;
   padding: 10px;
-  overflow-x: hidden;
-  overflow-y: auto;
+  z-index: 1;
 }
 
 .app-content.transition-forward-enter {
@@ -120,4 +124,22 @@ body {
 
 .yom-data-grid-no-wrap-border .yom-data-grid {
   border: none;
+}
+
+.datetimepicker-component {
+  position: relative;
+  > input.form-control {
+    width: 191px;
+  }
+  > .input-group-addon {
+    width: auto;
+  }
+  .datetimepicker {
+    left: 0 !important;
+    top: 100% !important;
+    width: 100% !important;
+    .table-condensed {
+      width: 100% !important;
+    }
+  }
 }

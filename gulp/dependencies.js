@@ -1,10 +1,11 @@
 var gulp = require('gulp'),
     async = require('async'),
+    mt2amd = require('gulp-mt2amd'),
     amdBundler = require('gulp-amd-bundler'),
     through = require('through2');
 
 // move dependencies into build dir
-gulp.task('dependencies', ['bundle-js-dependencies', 'copy-js-dependencies', 'css-dependencies']);
+gulp.task('dependencies', ['bundle-js-dependencies', 'bundle-css-dependencies', 'copy-js-dependencies', 'copy-css-dependencies']);
 
 gulp.task('bundle-js-dependencies', function (done) {
   async.each([
@@ -25,6 +26,24 @@ gulp.task('bundle-js-dependencies', function (done) {
   }, done);
 });
 
+gulp.task('bundle-css-dependencies', function (done) {
+  async.each([
+    'node_modules/bootstrap-datetime-picker/css/bootstrap-datetimepicker.css'
+  ], function (item, done) {
+    var src = item, dest = '';
+    if (Array.isArray(item)) {
+      src = item[0];
+      dest = item[1];
+    } else {
+      dest = item.match(/(?:node_modules|bower_components)\/([^\/]+)/);
+      dest = dest && dest[1] || '';
+    }
+    gulp.src(src)
+      .pipe(mt2amd())
+      .pipe(gulp.dest('dist/js/vendor/' + dest)).on('finish', done);
+  }, done);
+});
+
 gulp.task('copy-js-dependencies', function (done) {
   async.each([
     'node_modules/babel-polyfill/dist/polyfill.js',
@@ -39,7 +58,8 @@ gulp.task('copy-js-dependencies', function (done) {
     'node_modules/bootstrap/dist/js/bootstrap.js',
     'node_modules/jquery/dist/jquery.js',
     'node_modules/classnames/index.js',
-    'node_modules/yom-form-util/dist/yom-form-util.js'
+    'node_modules/yom-form-util/dist/yom-form-util.js',
+    'node_modules/bootstrap-datetime-picker/js/bootstrap-datetimepicker.js', 'node_modules/bootstrap-datetime-picker/js/locales/bootstrap-datetimepicker.zh-CN.js'
   ], function (item, done) {
     var src = item, dest = '';
     if (Array.isArray(item)) {
@@ -54,7 +74,7 @@ gulp.task('copy-js-dependencies', function (done) {
   }, done);
 });
 
-gulp.task('css-dependencies', function (done) {
+gulp.task('copy-css-dependencies', function (done) {
   async.each([
     ['node_modules/font-awesome/css/font-awesome.css', 'font-awesome/css'],
     ['node_modules/font-awesome/fonts/**/*', 'font-awesome/fonts']

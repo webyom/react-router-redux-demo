@@ -23,7 +23,8 @@ window.require = window.require || {
     'immutable': 'vendor/immutable/immutable',
     'yom-form-util': 'vendor/yom-form-util/yom-form-util',
     'app-decorators': 'app/decorator/index',
-    'app-util': 'app/util/index'
+    'app-util': 'app/util/index',
+    'datetimepicker': 'vendor/bootstrap-datetime-picker/bootstrap-datetimepicker'
   },
   shim: {
     'react': {
@@ -52,6 +53,10 @@ window.require = window.require || {
     },
     'immutable': {
       exports: 'Immutable'
+    },
+    'datetimepicker': {
+      exports: 'jQuery.fn.datetimepicker',
+      deps: ['vendor/bootstrap-datetime-picker/bootstrap-datetimepicker.css']
     }
   },
   resolveUrl(url) {
