@@ -24,7 +24,8 @@ window.require = window.require || {
     'yom-form-util': 'vendor/yom-form-util/yom-form-util',
     'app-decorators': 'app/decorator/index',
     'app-util': 'app/util/index',
-    'datetimepicker': 'vendor/bootstrap-datetime-picker/bootstrap-datetimepicker'
+    'datetimepicker': 'vendor/bootstrap-datetime-picker/bootstrap-datetimepicker',
+    'datetimepicker-zh-cn': 'vendor/bootstrap-datetime-picker/bootstrap-datetimepicker.zh-CN'
   },
   shim: {
     'react': {
@@ -56,7 +57,15 @@ window.require = window.require || {
     },
     'datetimepicker': {
       exports: 'jQuery.fn.datetimepicker',
-      deps: ['vendor/bootstrap-datetime-picker/bootstrap-datetimepicker.css']
+      deps: [
+        'vendor/bootstrap-datetime-picker/bootstrap-datetimepicker.css'
+      ]
+    },
+    'datetimepicker-zh-cn': {
+      exports: 'jQuery.fn.datetimepicker.dates.zh-CN',
+      deps: [
+        'datetimepicker'
+      ]
     }
   },
   resolveUrl(url) {

@@ -4,7 +4,7 @@ import {autobind} from 'core-decorators';
 import {routeComponent, formUtilComponent} from 'app-decorators';
 import YomFormUtil from 'yom-form-util';
 import SubFormComponent from './sub-form';
-import 'datetimepicker';
+import 'datetimepicker-zh-cn';
 import './style.css';
 
 @routeComponent
@@ -12,6 +12,7 @@ import './style.css';
 class ModuleComponent extends React.Component {
   componentDidMount() {
     $('#datetimepicker').datetimepicker({
+      language: 'zh-CN',
       bootcssVer: 3,
       fontAwesome: true,
       pickerPosition: 'bottom-left',
