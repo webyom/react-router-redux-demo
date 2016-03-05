@@ -22,7 +22,7 @@ class DatetimePicker extends React.Component {
     }).on('changeDate', (evt) => {
       this.setState({value: evt.date.getTime()});
     });
-    this.setState({value: props.initialDate});
+    this.setState({value: props.defaultValue});
   }
 
   componentWillUnmount() {
@@ -39,7 +39,7 @@ class DatetimePicker extends React.Component {
   render() {
     let props = this.props;
     let format = props.time ? 'yyyy-mm-dd hh:ii:ss' : 'yyyy-mm-dd';
-    let initialDate = props.initialDate && new Date(props.initialDate) || new Date();
+    let initialDate = props.defaultValue && new Date(props.defaultValue) || new Date();
     let initialDateStr = '2016-03-01 15:00:00'; // TODO
     return (
       <div className="validate-group">

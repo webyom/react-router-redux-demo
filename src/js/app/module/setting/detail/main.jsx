@@ -5,6 +5,7 @@ import {routeComponent, formUtilComponent} from 'app-decorators';
 import YomFormUtil from 'yom-form-util';
 import SubFormComponent from './sub-form';
 import DatetimePicker from 'widget/datetime-picker/main';
+import AutoComplete from 'widget/auto-complete/main';
 import './style.css';
 
 @routeComponent
@@ -42,6 +43,10 @@ class ModuleComponent extends React.Component {
           <div className="form-group">
             <label>出生日期</label>
             <DatetimePicker ref="formUtilComponentBirthday" name="birthday" mandatory />
+          </div>
+          <div className="form-group">
+            <label>兴趣爱好</label>
+            <AutoComplete ref="formUtilComponentHabit" name="habit" mandatory />
           </div>
           <SubFormComponent ref="formUtilComponentSubForm" />
           <div className="checkbox validate-group">

@@ -23,6 +23,7 @@ window.require = window.require || {
     'bluebird': 'vendor/bluebird/bluebird',
     'immutable': 'vendor/immutable/immutable',
     'yom-form-util': 'vendor/yom-form-util/yom-form-util',
+    'yom-auto-complete': 'vendor/yom-auto-complete/yom-auto-complete',
     'app-decorators': 'app/decorator/index',
     'app-util': 'app/util/index',
     'datetimepicker': 'vendor/bootstrap-datetime-picker/bootstrap-datetimepicker',
