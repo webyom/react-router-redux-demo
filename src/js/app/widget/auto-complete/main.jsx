@@ -7,20 +7,64 @@ class AutoComplete extends React.Component {
   componentDidMount() {
     let props = this.props;
     let box = ReactDOM.findDOMNode(this.refs.box);
-    // TODO
-    this.setState({value: props.defaultValue});
+    this.autoComplete = new YomAutoComplete(box, {
+      maxSelection: props.maxSelection,
+      freeInput: props.freeInput,
+      dataSource: props.dataSource,
+      getMatchedList: props.getMatchedList,
+      getStdItem: props.getStdItem,
+      richSelectionResult: true,
+      noResultMsg: '找不到结果'
+    });
   }
 
   componentWillUnmount() {
-    // TODO
+    this.autoComplete.destroy();
+  }
+
+  getSelectedItem(item, getter) {
+    if (getter) {
+      return getter(item);
+    } else if (item.id) {
+      return item.id;
+    } else {
+      return item;
+    }
   }
 
   validateForm() {
     return new Promise((resolve, reject) => {
       require(['yom-form-util'], (YomFormUtil) => {
+        let props = this.props;
         let box = ReactDOM.findDOMNode(this.refs.box);
-        let valid = {};
-        valid.passed = false;
+        let data = {};
+        let valid;
+        let selectedDataList = this.autoComplete.getSelectedDataList();
+        if (props.mandatory && !selectedDataList.length) {
+          let failItem = {
+            failType: 'mandatory',
+            failMsg: YomFormUtil.getMsg('mandatory'),
+            item: box
+          };
+          valid = {
+            passed: false,
+            failList: [failItem],
+            helpList: [failItem],
+            data: data
+          };
+        } else {
+          if (props.maxSelection == '1') {
+            data[props.name] = this.getSelectedItem(selectedDataList[0], props.getSelectedItem);
+          } else {
+            data[props.name] = selectedDataList.map(item => this.getSelectedItem(item, props.getSelectedItem));
+          }
+          valid = {
+            passed: true,
+            failList: [],
+            helpList: [],
+            data: data
+          };
+        }
         if (valid.passed) {
           YomFormUtil.dehighLight(box);
         } else {

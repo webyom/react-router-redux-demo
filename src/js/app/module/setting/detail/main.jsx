@@ -46,7 +46,11 @@ class ModuleComponent extends React.Component {
           </div>
           <div className="form-group">
             <label>兴趣爱好</label>
-            <AutoComplete ref="formUtilComponentHabit" name="habit" mandatory />
+            <AutoComplete ref="formUtilComponentHabit" name="habit" mandatory dataSource={[
+              {id: '1', name: '篮球'},
+              {id: '2', name: '足球'},
+              {id: '3', name: '乒乓球'}
+            ]} getSelectedItem={item => item.name} maxSelection="2" />
           </div>
           <SubFormComponent ref="formUtilComponentSubForm" />
           <div className="checkbox validate-group">

@@ -59,6 +59,7 @@ gulp.task('copy-js-dependencies', function (done) {
     'node_modules/jquery/dist/jquery.js',
     'node_modules/classnames/index.js',
     'node_modules/yom-form-util/dist/yom-form-util.js',
+    'node_modules/yom-auto-complete/dist/yom-auto-complete.js',
     'node_modules/bootstrap-datetime-picker/js/bootstrap-datetimepicker.js', 'node_modules/bootstrap-datetime-picker/js/locales/bootstrap-datetimepicker.zh-CN.js'
   ], function (item, done) {
     var src = item, dest = '';
