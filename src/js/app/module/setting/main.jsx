@@ -5,6 +5,22 @@ import './style.css';
 
 @routeComponent
 class ModuleComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dgState: {
+        sortColumnId: 'a',
+        sortOrder: 'desc',
+        filterMap: decodeURIComponent('c%2C0%2Cxx%3Bf%2C0%2Czz%3Ba%2C0%2Ca%2Cb')
+      },
+      dgSetting: {
+        lockColumnAmount: 2,
+        columnSequence: ['b', 'c', 'f'],
+        hiddenColumns: ['b']
+      }
+    };
+  }
+
   render() {
     let children = this.props.children;
     if (children) {
@@ -166,19 +182,11 @@ class ModuleComponent extends React.Component {
           width: 200
         }
       ];
-      let state = {
-        sortColumnId: 'a',
-        sortOrder: 'desc',
-        filterMap: decodeURIComponent('c%2C0%2Cxx%3Bf%2C0%2Czz%3Ba%2C0%2Ca%2Cb')
-      };
-      let setting = {
-        lockColumnAmount: 2,
-        columnSequence: ['b', 'c', 'f'],
-        hiddenColumns: ['b']
-      };
+      let state = this.state.dgState;
+      let setting = this.state.dgSetting;
       return (
         <div>
-          <DataGrid columns={columns} data={data} state={state} setting={setting} onStateChange={state => console.log(state)} onSettingChange={setting => console.log(setting)} sequence={{name: '#'}} checkbox bordered striped hightLightRow  />
+          <DataGrid columns={columns} data={data} state={state} setting={setting} onStateChange={state => this.setState({dgState: state})} onSettingChange={setting => this.setState({dgSetting: setting})} sequence={{name: '#'}} checkbox bordered striped hightLightRow  />
         </div>
       );
     }
