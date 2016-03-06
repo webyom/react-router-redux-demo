@@ -24,6 +24,7 @@ window.require = window.require || {
     'immutable': 'vendor/immutable/immutable',
     'yom-form-util': 'vendor/yom-form-util/yom-form-util',
     'yom-auto-complete': 'vendor/yom-auto-complete/yom-auto-complete',
+    'yom-data-grid': 'vendor/yom-data-grid/yom-data-grid',
     'app-decorators': 'app/decorator/index',
     'app-util': 'app/util/index',
     'datetimepicker': 'vendor/bootstrap-datetime-picker/bootstrap-datetimepicker',

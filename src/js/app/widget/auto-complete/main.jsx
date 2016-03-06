@@ -13,6 +13,7 @@ class AutoComplete extends React.Component {
       dataSource: props.dataSource,
       getMatchedList: props.getMatchedList,
       getStdItem: props.getStdItem,
+      initData: Array.isArray(props.defaultValue) ? props.defaultValue : props.defaultValue ? [props.defaultValue] : [],
       richSelectionResult: true,
       noResultMsg: '找不到结果'
     });

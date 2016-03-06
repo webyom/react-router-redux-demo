@@ -50,7 +50,7 @@ class ModuleComponent extends React.Component {
               {id: '1', name: '篮球'},
               {id: '2', name: '足球'},
               {id: '3', name: '乒乓球'}
-            ]} getSelectedItem={item => item.name} maxSelection="2" />
+            ]} defaultValue={{id: '1', name: '篮球'}} getSelectedItem={item => item.id} maxSelection="2" />
           </div>
           <SubFormComponent ref="formUtilComponentSubForm" />
           <div className="checkbox validate-group">
