@@ -19,9 +19,9 @@ class ModuleComponent extends React.Component {
       if (!valid.passed) {
         YomFormUtil.focus(ReactDOM.findDOMNode(this), true);
       }
-      console.log(valid);
+      // console.log(valid);
     } catch (err) {
-      console.error(err);
+      // console.error(err);
     }
   }
 
