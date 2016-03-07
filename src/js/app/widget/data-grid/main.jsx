@@ -1,10 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Immutable from 'immutable';
 import YomDataGrid from 'yom-data-grid';
 
 class DataGrid extends React.Component {
   componentDidMount() {
     this.renderDataGrid();
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return !Immutable.is(Immutable.fromJS({
+      data: nextProps.data,
+      state: nextProps.state,
+      setting: nextProps.setting
+    }), Immutable.fromJS({
+      data: this.props.data,
+      state: this.props.state,
+      setting: this.props.setting
+    }));
   }
 
   componentDidUpdate(props) {
@@ -13,6 +26,10 @@ class DataGrid extends React.Component {
 
   componentWillUnmount() {
     this.dataGrid.destroy();
+  }
+
+  get dataGridInstance() {
+    return this.dataGrid;
   }
 
   renderDataGrid() {
@@ -30,6 +47,7 @@ class DataGrid extends React.Component {
       bordered: props.bordered,
       striped: props.striped,
       hightLightRow: props.hightLightRow,
+      onSelect: props.onSelect,
       onStateChange: props.onStateChange,
       onSettingChange: props.onSettingChange
     });
@@ -40,7 +58,7 @@ class DataGrid extends React.Component {
     let props = this.props;
     let height = parseInt(props.height);
     return (
-      <div ref="container" style={{height: height > 0 ? height + 'px' : 'auto'}}></div>
+      <div ref="container" style={{height: height > 0 ? '100%' : 'auto'}}></div>
     );
   }
 }
