@@ -2,89 +2,9 @@
 @import '../../../../css/app/mixins.less';
 
 .app-module__setting {
-  bottom: 0;
-  overflow: hidden;
-
-  .data-grid-component {
-    position: relative;
-    height: 100%;
-    > .header {
-      padding: 10px;
-      height: 55px;
-      background-color: lighten(@gray-lighter, 5%);
-      border: 1px solid darken(@gray-lighter, 5%);
-      overflow: hidden;
-      position: relative;
-      .clearfix;
-      &.show-op .header-op {
-        transform: translateX(0);
-      }
-    }
-    .header__title {
-      float: left;
-      h3 {
-        font-size: @font-size-base * 1.1;
-        margin: 0;
-        line-height: 35px;
-      }
-    }
-    .header__filter {
-      float: left;
-    }
-    .header__create {
-      float: right;
-      text-align: right;
-    }
-    .header-op {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      padding: 10px;
-      background-color: lighten(@gray-lighter, 5%);
-      transform: translateX(-100%);
-      transition: transform .3s;
-      .selected-note {
-        color: @gray-light;
-        i {
-          font-weight: bold;
-          font-style: normal;
-        }
-      }
-      .btn-default {
-        margin-right: 10px;
-      }
-      .btn-close {
-        position: absolute;
-        right: 5px;
-        top: 10px;
-      }
-    }
-    > .data-grid {
-      position: absolute;
-      left: 0;
-      top: 55px;
-      right: 0;
-      bottom: 55px;
-      border: 1px solid darken(@gray-lighter, 5%);
-      .yom-data-grid {
-        border: none;
-      }
-    }
-    > .pag {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding: 10px;
-      background-color: lighten(@gray-lighter, 5%);
-      border: 1px solid darken(@gray-lighter, 5%);
-      border-top-width: 2px;
-      .pagination {
-        margin: 0;
-        display: block;
-      }
-    }
+  &.route__setting--list-_page-_sortColumnId-_sortOrder-_filterMap {
+    bottom: 0;
+    overflow: hidden;
   }
+
 }

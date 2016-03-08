@@ -10,7 +10,7 @@ let routeComponent = Wrapped => class RouteComponent extends Wrapped {
       if (i > s) {
         return next;
       }
-      let p = route.path.replace(/^\/+/, '').replace(/\/+:/g, '-_').replace(/\/+/g, '-');
+      let p = route.path.replace(/^\/+/, '').replace(/\*/g, '_').replace(/[()]/g, '').replace(/\/+:/g, '-_').replace(/\/+/g, '-');
       if (p) {
         next += (next == 'app-module' ? '__' : '--') + p;
       }
@@ -19,7 +19,7 @@ let routeComponent = Wrapped => class RouteComponent extends Wrapped {
     this.props.routes.reduce((prev, route, i) => {
       let next = prev;
       if (next) {
-        next += (next == 'route' ? '__' : '--') + route.path.replace(/\/+:/g, '-_').replace(/\/+/g, '-');
+        next += (next == 'route' ? '__' : '--') + route.path.replace(/\*/g, '_').replace(/[()]/g, '').replace(/\/+:/g, '-_').replace(/\/+/g, '-');
         if (i > s) {
           res[next] = true;
         }
@@ -30,6 +30,9 @@ let routeComponent = Wrapped => class RouteComponent extends Wrapped {
     }, '');
     if (this.props.className) {
       this.props.className.split(/\s+/).forEach(c => c && (res[c] = true));
+    }
+    if (!this.props.children) {
+      res['no-route-component-children'] = true;
     }
     return {...super.classNames, ...res};
   }

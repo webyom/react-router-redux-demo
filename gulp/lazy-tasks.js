@@ -19,7 +19,7 @@ exports.lazyAmdWrapTask = lazypipe()
   .pipe(function () {
     return through.obj(function (file, enc, callback) {
       var contents = file.contents.toString();
-      if ((/\bexports\.|\bmodule.exports\b/).test(contents)) {
+      if ((/\bexports\.|\bmodule.exports\b|Object.defineProperty\(exports,/).test(contents)) {
         file.contents = new Buffer([
           'define(function(require, exports, module) {',
           file.contents.toString(),
