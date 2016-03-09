@@ -12,15 +12,15 @@
     "apiContext": ""
   },
   "production": {
-    "domain": "ddicar.com",
-    "cdnOrigin": "http://cdn.ddicar.com",
-    "apiOrigin": "http://newapi.ddicar.com:4080",
+    "domain": "",
+    "cdnOrigin": "http://47.88.18.101/react-demo",
+    "apiOrigin": "http://47.88.18.101:4080",
     "apiContext": ""
   },
   "staging": {
-    "domain": "ddicar.com",
-    "cdnOrigin": "http://cdn.ddicar.com",
-    "apiOrigin": "http://stg-newapi.ddicar.com:4080",
+    "domain": "",
+    "cdnOrigin": "http://47.88.18.101/react-demo",
+    "apiOrigin": "http://47.88.18.101:4080",
     "apiContext": ""
   }
 }
