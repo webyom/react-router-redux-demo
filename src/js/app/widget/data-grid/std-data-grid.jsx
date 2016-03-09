@@ -208,7 +208,7 @@ class StdDataGrid extends React.Component {
       <div className="data-grid-component">
         <div className={classNames('header', {'show-op': dgSelectedLength})}>
           <div className="header__content">
-            <div className="header__title" style={{width: props.titleWidth + 'px'}}>
+            <div className="header__title" style={{width: '50px'}}>
               <h3>{props.title}</h3>
             </div>
             <div className="header__filter">
@@ -238,8 +238,7 @@ class StdDataGrid extends React.Component {
 }
 
 StdDataGrid.propTypes = {
-  title: React.PropTypes.string.isRequired,
-  titleWidth: React.PropTypes.number,
+  title: React.PropTypes.string,
   columns: React.PropTypes.array.isRequired,
   data: React.PropTypes.array.isRequired,
   state: React.PropTypes.object,
@@ -249,7 +248,7 @@ StdDataGrid.propTypes = {
 };
 
 StdDataGrid.defaultProps = {
-  titleWidth: 70
+  title: '列表'
 };
 
 export {StdDataGrid};

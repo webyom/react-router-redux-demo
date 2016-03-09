@@ -7,85 +7,85 @@ import columns from './data-grid-columns';
 import './style.css';
 
 let data = [{
-  a: '1',
-  b: '2',
-  c: '3'
+  a: '选项A',
+  b: '100',
+  c: '字符串'
 }, {
-  a: '4',
-  b: '5',
-  c: '6'
+  a: '选项B',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项C',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项A',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项B',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项C',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项A',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项B',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项C',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项A',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项B',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项C',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项A',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项B',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项C',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项A',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项B',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项C',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项A',
+  b: '100',
+  c: '字符串'
 }, {
-  a: 'yy',
-  b: 'xx',
-  c: 'xx'
+  a: '选项B',
+  b: '100',
+  c: '字符串'
 }];
 
 @routeComponent
@@ -115,7 +115,7 @@ class ModuleComponent extends React.Component {
   render() {
     return (
       <div>
-        <StdDataGrid ref="dataGrid" name="setting" title="商户列表" columns={columns} data={data} state={this.state.dgState} page={parseInt(this.props.params.page) || 1} pageSize={20} total={200} onChange={this.onChange} />
+        <StdDataGrid ref="dataGrid" name="setting" title={`设置列表（${200}）`} columns={columns} data={data} state={this.state.dgState} page={parseInt(this.props.params.page) || 1} pageSize={20} total={200} onChange={this.onChange} />
       </div>
     );
   }

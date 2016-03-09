@@ -1,31 +1,34 @@
 let columns = [
   {
     id: 'a',
-    name: '店铺名称',
+    name: '列表',
     sortable: true,
     filterable: true,
     filterOption: {
       type: 'set',
       options: [
         {
-          name: 'A',
+          name: '选项A',
           value: 'a'
         },
         {
-          name: 'B',
+          name: '选项B',
           value: 'b'
         },
         {
-          name: 'C',
+          name: '选项C',
           value: 'c'
         }
       ]
+    },
+    renderer(item) {
+      return `<a href="#/setting/detail/1">${item}</a>`;
     },
     width: 200
   },
   {
     id: 'b',
-    name: '产品类型',
+    name: '数字',
     sortable: true,
     filterable: true,
     filterOption: {
@@ -35,35 +38,35 @@ let columns = [
   },
   {
     id: 'c',
-    name: '公司名称',
+    name: '字符串1',
     sortable: true,
     filterable: true,
     width: 200
   },
   {
     id: 'd',
-    name: '所在地区',
+    name: '字符串2',
     sortable: true,
     filterable: true,
     width: 200
   },
   {
     id: 'e',
-    name: '申请时间',
+    name: '字符串3',
     sortable: true,
     filterable: true,
     width: 200
   },
   {
     id: 'f',
-    name: '审核状态',
+    name: '字符串4',
     sortable: true,
     filterable: true,
     width: 200
   },
   {
     id: 'g',
-    name: '店铺状态',
+    name: '字符串5',
     sortable: true,
     filterable: true,
     width: 200
