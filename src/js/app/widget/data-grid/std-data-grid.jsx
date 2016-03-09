@@ -131,6 +131,14 @@ class StdDataGrid extends React.Component {
     });
   }
 
+  @autobind
+  showFilterPanel(evt) {
+    let target = evt.currentTarget;
+    let id = $(target).closest('[data-id]').attr('data-id');
+    let column = this.refs.dataGrid.dataGridInstance.getColumnById(id);
+    this.refs.dataGrid.dataGridInstance.showFilterPanel(column, target);
+  }
+
   getSortHint() {
     let dgState = this.state.dgState;
     if (dgState && dgState.sortColumnId) {
@@ -174,7 +182,7 @@ class StdDataGrid extends React.Component {
           // console.log(filter, filterOption);
           hints.push(
             <div key={'filter_' + id} className="header__filter-item" data-id={id}>
-              <i className="fa fa-filter" /> {column.name} <a href="javascript:void(0);" onClick={this.removeFilter}><i className="fa fa-remove" /></a>
+              <a href="javascript:void(0);" onClick={this.showFilterPanel}><i className="fa fa-filter" /></a> {column.name} <a href="javascript:void(0);" onClick={this.removeFilter}><i className="fa fa-remove" /></a>
             </div>
           );
         }
@@ -190,18 +198,24 @@ class StdDataGrid extends React.Component {
     let dgSelectedLength = this.state.dgSelectedLength;
     let editBtn = dgSelectedLength === 1 ? <button className="btn btn-link"><i className="fa fa-pencil" /> 编辑</button> : '';
     let filterHint = this.getFilterHint() || this.state.filterHint;
+    let noDataMsg = '';
+    if (!props.data || !props.data.length) {
+      noDataMsg = <div className="no-data-msg">
+        没有相关数据
+      </div>;
+    }
     return (
       <div className="data-grid-component">
         <div className={classNames('header', {'show-op': dgSelectedLength})}>
           <div className="header__content">
-            <div className="header__title" style={{width: '70px'}}>
-              <h3>商户列表</h3>
+            <div className="header__title" style={{width: props.titleWidth + 'px'}}>
+              <h3>{props.title}</h3>
             </div>
             <div className="header__filter">
               {filterHint}
             </div>
             <div className="header__create">
-              <button className="btn btn-primary">新建商户</button>
+              <button className="btn btn-link"><i className="fa fa-plus" /></button>
             </div>
           </div>
           <div className="header-op">
@@ -213,6 +227,7 @@ class StdDataGrid extends React.Component {
         </div>
         <div className="data-grid">
           <DataGrid ref="dataGrid" height="100%" columns={props.columns} data={props.data} state={dgState} setting={dgSetting} onStateChange={this.onDgStateChange} onSettingChange={this.onDgSettingChange} onSelect={this.onDgRowSelect} minScrollXColumns="7" sequence={{name: '#'}} checkbox bordered striped hightLightRow  />
+          {noDataMsg}
         </div>
         <div className="pag">
           <Paginator page={props.page} pageSize={props.pageSize} total={props.total} onChange={this.onPageChange} />
@@ -223,6 +238,8 @@ class StdDataGrid extends React.Component {
 }
 
 StdDataGrid.propTypes = {
+  title: React.PropTypes.string.isRequired,
+  titleWidth: React.PropTypes.number,
   columns: React.PropTypes.array.isRequired,
   data: React.PropTypes.array.isRequired,
   state: React.PropTypes.object,
@@ -232,7 +249,7 @@ StdDataGrid.propTypes = {
 };
 
 StdDataGrid.defaultProps = {
-  state: {}
+  titleWidth: 70
 };
 
 export {StdDataGrid};

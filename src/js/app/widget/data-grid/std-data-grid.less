@@ -56,6 +56,7 @@
     border-radius: 2px;
   }
   .header__create {
+    padding-right: 30px;
     text-align: right;
     display: table-cell;
   }
@@ -82,7 +83,7 @@
     }
     .btn-close {
       position: absolute;
-      right: 5px;
+      right: 10px;
       top: 10px;
     }
   }
@@ -98,6 +99,34 @@
     }
     .yom-data-grid-filter-remove-icon {
       display: none;
+    }
+    .yom-data-grid-setting-icon {
+      top: -44px;
+      right: 10px;
+      left: auto;
+      background-color: transparent;
+      color: @link-color;
+      line-height: 34px;
+      height: 34px;
+      padding: 0 10px;
+      width: auto;
+      display: block;
+      &:hover {
+        color: @link-hover-color;
+      }
+    }
+    .yom-data-grid-setting-panel {
+      right: 0;
+      left: auto;
+      z-index: 4;
+    }
+    .no-data-msg {
+      position: absolute;
+      top: 50%;
+      margin-top: -20px;
+      width: 100%;
+      text-align: center;
+      color: @gray-light;
     }
   }
   > .pag {

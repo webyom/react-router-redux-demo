@@ -115,7 +115,7 @@ class ModuleComponent extends React.Component {
   render() {
     return (
       <div>
-        <StdDataGrid ref="dataGrid" name="setting" columns={columns} data={data} state={this.state.dgState} page={parseInt(this.props.params.page) || 1} pageSize={20} total={200} onChange={this.onChange} />
+        <StdDataGrid ref="dataGrid" name="setting" title="商户列表" columns={columns} data={data} state={this.state.dgState} page={parseInt(this.props.params.page) || 1} pageSize={20} total={200} onChange={this.onChange} />
       </div>
     );
   }
